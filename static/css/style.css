@@ -1,17 +1,17 @@
 /* static/css/style.css */
 :root {
-  --primary-color: #5e60ce; /* Sanfteres Violett */
-  --secondary-color: #48bfe3; /* Frisches Cyan */
-  --accent-color: #ff6b6b; /* Lebendiges Koralle */
-  --light-color: #f7f9fc; /* Weicherer Weißton */
-  --dark-color: #1e2a44; /* Dunkleres Blau für Kontrast */
-  --success-color: #40c057; /* Modernes Grün */
-  --warning-color: #ff922b; /* Warmer Orange-Ton */
-  --danger-color: #fa5252; /* Sanfter Rot-Ton */
-  --gray-light: #e9ecef; /* Helles Grau */
-  --gray: #ced4da; /* Mittelgrau */
-  --gray-dark: #6c757d; /* Dunkles Grau */
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Weicher Schatten */
+  --primary-color: #5e60ce;
+  --secondary-color: #48bfe3;
+  --accent-color: #ff6b6b;
+  --light-color: #f7f9fc;
+  --dark-color: #1e2a44;
+  --success-color: #40c057;
+  --warning-color: #ff922b;
+  --danger-color: #fa5252;
+  --gray-light: #e9ecef;
+  --gray: #ced4da;
+  --gray-dark: #6c757d;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -52,7 +52,7 @@ header h1 {
   font-size: 3rem;
   font-weight: 600;
   letter-spacing: 1px;
-  animation: pulse 2.5s infinite;
+  /* Animation entfernt */
 }
 
 .main-nav ul {
@@ -492,6 +492,10 @@ textarea {
 @media (max-width: 600px) {
   .container {
     padding: 1.5rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
   }
 
   .form-row {
