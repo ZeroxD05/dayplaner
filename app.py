@@ -192,5 +192,8 @@ def get_calendar(year, month):
         "task_counts": task_counts
     })
 
+import os
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))  # Standard auf 5000, wenn PORT nicht gesetzt
+    app.run(host='0.0.0.0', port=port, debug=True)
