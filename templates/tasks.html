@@ -1,0 +1,135 @@
+<!-- templates/tasks.html -->
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meine Aufgaben - Day Planner Pro</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="animate__animated animate__fadeIn">
+        <h1>Day Planner Pro</h1>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{{ url_for('index') }}">Kalender</a></li>
+            <li class="active">
+              <a href="{{ url_for('tasks') }}">Meine Aufgaben</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="tasks-container">
+        <div class="tasks-header">
+          <h2>Meine Aufgaben <span id="task-date">für heute</span></h2>
+          
+
+        <section class="tasks-section">
+          <div id="tasks-container">
+            {% for task in tasks %}
+            <div
+              class="task-card animate__animated animate__fadeIn"
+              data-id="{{ task.id }}"
+              data-date="{{ task.date }}"
+              data-priority="{{ task.priority }}"
+              data-completed="{{ task.completed|lower }}"
+            >
+              <div class="task-header {{ 'completed' if task.completed }}">
+                <h3 class="editable" data-field="title">{{ task.title }}</h3>
+                <span class="priority-badge {{ task.priority }}"
+                  >{{ task.priority }}</span
+                >
+              </div>
+              <div class="task-body">
+                <p class="editable" data-field="description">
+                  {{ task.description }}
+                </p>
+                <div class="task-meta">
+                  <div class="task-date-info">
+                    <div class="task-date">{{ task.date }}</div>
+                    <div class="task-time editable" data-field="time">
+                      {{ task.time }}
+                    </div>
+                  </div>
+                  <div class="task-edit-controls">
+                    <button class="edit-task-btn" data-id="{{ task.id }}">
+                      Bearbeiten
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="task-actions">
+                <form
+                  action="{{ url_for('complete_task', task_id=task.id) }}"
+                  method="post"
+                  class="inline-form"
+                >
+                  <button type="submit" class="btn complete-btn">
+                    {% if task.completed %}Rückgängig{% else %}Erledigt{% endif
+                    %}
+                  </button>
+                </form>
+                <form
+                  action="{{ url_for('delete_task', task_id=task.id) }}"
+                  method="post"
+                  class="inline-form"
+                >
+                  <button type="submit" class="btn delete-btn">Löschen</button>
+                </form>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Task Edit Modal -->
+    <div id="edit-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Aufgabe bearbeiten</h2>
+        <form id="edit-form">
+          <input type="hidden" id="edit-task-id" />
+          <div class="form-group">
+            <label for="edit-title">Titel</label>
+            <input type="text" id="edit-title" name="edit-title" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-description">Beschreibung</label>
+            <textarea id="edit-description" name="edit-description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-time">Zeit</label>
+            <input type="time" id="edit-time" name="edit-time" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-priority">Priorität</label>
+            <select id="edit-priority" name="edit-priority">
+              <option value="niedrig">Niedrig</option>
+              <option value="mittel">Mittel</option>
+              <option value="hoch">Hoch</option>
+            </select>
+          </div>
+          <button type="submit" class="btn save-btn">Speichern</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+  </body>
+</html>

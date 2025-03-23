@@ -1,0 +1,127 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day Planner Pro</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="animate__animated animate__fadeIn">
+        <h1>Day Planner Pro</h1>
+        <nav class="main-nav">
+          <ul>
+            <li class="active">
+              <a href="{{ url_for('index') }}">Kalender</a>
+            </li>
+            <li><a href="{{ url_for('tasks') }}">Meine Aufgaben</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="dashboard">
+        <section class="calendar-section animate__animated animate__fadeInLeft">
+          <div class="calendar-header">
+            <button id="prev-month" class="calendar-nav-btn">&lt;</button>
+            <h2 id="calendar-title">{{ current_month }} {{ current_year }}</h2>
+            <button id="next-month" class="calendar-nav-btn">&gt;</button>
+          </div>
+          <div class="calendar">
+            <div class="weekdays">
+              <div>Mo</div>
+              <div>Di</div>
+              <div>Mi</div>
+              <div>Do</div>
+              <div>Fr</div>
+              <div>Sa</div>
+              <div>So</div>
+            </div>
+            <div id="calendar-days" class="days">
+              {% for day in days_in_month %} {% if day.day %}
+              <div
+                class="day {% if day.date == today %}today{% endif %}"
+                data-date="{{ day.date }}"
+              >
+                {{ day.day }}
+                <div class="dot"></div>
+              </div>
+              {% else %}
+              <div class="day empty"></div>
+              {% endif %} {% endfor %}
+            </div>
+          </div>
+          <div class="date-display">
+            <div id="current-date">{{ today }}</div>
+          </div>
+        </section>
+
+        <main>
+          <section
+            class="task-form-section animate__animated animate__fadeInUp"
+          >
+            <h2>Neue Aufgabe</h2>
+            <form
+              id="task-form"
+              action="{{ url_for('add_task') }}"
+              method="post"
+            >
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Titel"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <textarea
+                  id="description"
+                  name="description"
+                  placeholder="Beschreibung"
+                ></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value="{{ today }}"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input type="time" id="time" name="time" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <select id="priority" name="priority">
+                  <option value="niedrig">Niedrig</option>
+                  <option value="mittel" selected>Mittel</option>
+                  <option value="hoch">Hoch</option>
+                </select>
+              </div>
+              <button type="submit" class="btn add-btn">Hinzufügen</button>
+            </form>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
